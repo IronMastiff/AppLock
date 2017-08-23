@@ -7,7 +7,7 @@
     <string name="lockscreen_access_pattern_cell_added">已添加单元格</string>
     <string name="lockscreen_access_pattern_start">绘制解锁图案</string>
     <string name="lockscreen_access_pattern_detected">密码已保存</string>
-    <string name="lockscreen_access_pattern_cleard">密码已删除</string>
+    <string name="lockscreen_access_pattern_cleared">密码已删除</string>
 
     <string name="lock_recording_intro_header">设置应用程序的解锁密码</string>
     <string name="lock_setting_help_how_to_record">如何绘制解锁图案</string>

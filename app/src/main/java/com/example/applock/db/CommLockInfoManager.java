@@ -1,4 +1,4 @@
-package com.example.applock.bean;
+package com.example.applock.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
 import com.example.applock.base.AppConstants;
+import com.example.applock.bean.CommLockInfo;
+import com.example.applock.bean.FaviterInfo;
 import com.example.applock.utils.DataUtil;
 
 import org.litepal.crud.DataSupport;

@@ -5,4 +5,7 @@ package com.example.applock.utils;
  */
 
 public class LockPatternUtils {
+    private static final String TAG = "LockPatternUtils";
+    private static final String LOCK_PATTERN_FILE = "gesture.key";
+
 }

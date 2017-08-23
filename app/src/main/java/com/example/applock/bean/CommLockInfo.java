@@ -103,7 +103,7 @@ public class CommLockInfo extends DataSupport implements Parcelable {
         isSetUnLock = setUnLock;
     }
 
-    public static final Creator<CommLockInfo> CREATOR = new Creator<CommLockInfo>() {
+    public static final Parcelable.Creator<CommLockInfo> CREATOR = new Creator<CommLockInfo>() {
         @Override
         public CommLockInfo createFromParcel(Parcel in) {
             return new CommLockInfo(in);
