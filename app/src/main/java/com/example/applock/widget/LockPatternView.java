@@ -128,7 +128,7 @@ public class LockPatternView extends View {
     }
 
     //绘画界面按钮个数
-    private static class Cell {
+    public static class Cell {
         int row;
         int column;
         static Cell[][] sCells = new Cell[ 3 ][ 3 ];
@@ -161,7 +161,7 @@ public class LockPatternView extends View {
         }
 
         //排错
-        private void checkRange(int row, int column) {
+        private static void checkRange(int row, int column) {
             if( row < 0 || row > 2 ){
                 throw new IllegalArgumentException( "row must be in range 0-2" );
             }
@@ -938,7 +938,7 @@ public class LockPatternView extends View {
         final SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
         setPattern(DisplayMode.Correct,
-                LockPatternUtils.stringToPattern(ss.getSerializedPattern()));
+                LockPatternUtils.stringToPattern(ss.getSerializedPattern() ) );
         mPatternDisplayMode = DisplayMode.values()[ss.getDisplayMode()];
         mInputEnabled = ss.isInputEnabled();
         mInStealthMode = ss.isInStealthMode();
