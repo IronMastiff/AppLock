@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
  */
 
 public class SpUtil {
+
     private volatile static SpUtil mInstance;
 
     private Context mContext;

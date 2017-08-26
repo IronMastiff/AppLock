@@ -7,7 +7,13 @@ import android.util.Log;
 import com.example.applock.widget.LockPatternView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -92,4 +98,67 @@ public class LockPatternUtils {
         }
         return new String( res );
     }
+
+    /**
+     * 保存锁定图
+     */
+    public void saveLockPattern( List<LockPatternView.Cell> pattern ){
+        //计算哈希值
+        final byte[] hash = LockPatternUtils.patternToHash( pattern );
+        try {
+            //把哈希值写入文件
+            RandomAccessFile randomAccessFile = new RandomAccessFile( sLockPatternFilename, "rwd" );
+            //如果图案为空删除文件，并清空锁
+            if( pattern == null ){
+                randomAccessFile.setLength( 0 );
+            }
+            else{
+                randomAccessFile.write( hash, 0, hash.length );
+            }
+            randomAccessFile.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch( IOException ioe ){
+        }
+    }
+
+    private static byte[] patternToHash( List<LockPatternView.Cell> pattern ){
+        if( pattern == null ){
+            return null;
+        }
+
+        final int patternSize = pattern.size();
+        byte[] res = new byte[ patternSize ];
+        for( int i = 0; i < patternSize; i++ ){
+            LockPatternView.Cell cell = pattern.get( i );
+            res[ i ] = ( byte )( cell.getRow() * 3 + cell.getColumn() );
+        }
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance( "SHA-1" );
+            byte[] hash = messageDigest.digest( res );
+            return hash;
+        } catch (NoSuchAlgorithmException e) {
+            return res;
+        }
+    }
+
+    public boolean checkPattern( List<LockPatternView.Cell> pattern ){
+        try {
+            RandomAccessFile randomAccessFile = new RandomAccessFile( sLockPatternFilename, "r" );
+            final byte[] stored = new byte[ ( int )randomAccessFile.length() ];
+            int got = randomAccessFile.read( stored, 0, stored.length );
+            randomAccessFile.close();
+            if( got <= 0 ){
+                return true;
+            }
+            //输入的图的哈希值与文件中的图的哈希值对比
+            return Arrays.equals( stored, LockPatternUtils.patternToHash( pattern ) );
+        } catch (FileNotFoundException e) {
+            return true;
+        } catch (IOException e) {
+            return true;
+        }
+    }
+
 }

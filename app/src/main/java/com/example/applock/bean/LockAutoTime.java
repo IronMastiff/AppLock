@@ -31,7 +31,12 @@ public class LockAutoTime implements Parcelable {
         this.time = time;
     }
 
-    protected LockAutoTime(Parcel in) {
+    public LockAutoTime() {
+    }
+
+    protected LockAutoTime( Parcel in ){
+        this.title = in.readString();
+        this.time = in.readLong();
     }
 
     public static final Creator<LockAutoTime> CREATOR = new Creator<LockAutoTime>() {
